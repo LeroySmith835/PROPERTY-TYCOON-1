@@ -1,0 +1,35 @@
+# Ignore OS-generated files
+.DS_Store
+Thumbs.db
+
+# Ignore log files
+*.log
+logs/
+*.out
+
+# Ignore compiled files
+*.class
+*.o
+*.so
+*.dll
+*.exe
+
+# Ignore environment files
+.env
+*.local
+
+# Ignore dependencies
+node_modules/
+vendor/
+target/
+bin/
+obj/
+
+# Ignore editor/IDE files
+.vscode/
+.idea/
+*.swp
+
+# Ignore build artifacts
+dist/
+build/
