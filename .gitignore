@@ -33,3 +33,9 @@ obj/
 # Ignore build artifacts
 dist/
 build/
+# Ignore Unity cache and build files
+Library/
+Temp/
+Logs/
+Builds/
+.vs/
