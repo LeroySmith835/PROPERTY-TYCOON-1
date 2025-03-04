@@ -51,7 +51,14 @@ public class WaypointMover : MonoBehaviour
     {
         isMoving = true;
 
-        // Adjust the starting index for movement (skip the starting waypoint)
+        // Disable the player's BoxCollider2D while moving
+        BoxCollider2D playerCollider = playerTransform.GetComponent<BoxCollider2D>();
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = false;
+        }
+
+        // Move player step by step to the target waypoint based on the dice roll
         for (int i = 0; i < steps; i++)
         {
             waypointIndex++; // Increment to move to the next waypoint
@@ -78,6 +85,12 @@ public class WaypointMover : MonoBehaviour
         else
         {
             player2WaypointIndex = waypointIndex; // Update Player 2's index
+        }
+
+        // Re-enable the player's BoxCollider2D after reaching the final waypoint
+        if (playerCollider != null)
+        {
+            playerCollider.enabled = true;
         }
 
         isMoving = false; // Allow next move

@@ -5,40 +5,30 @@ public class Property : MonoBehaviour
     public string propertyName;
     public int purchasePrice;
     public int rentPrice;
-    public PlayerProp owner;  // Owner is now of type PlayerProp
+    public PlayerProp owner;
 
-    public void OnPlayerLand(PlayerProp player)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (owner == null)
+        PlayerProp player = collision.GetComponent<PlayerProp>(); // Check if a player entered
+        if (player != null) // Make sure it's a player
         {
-            // Offer to buy the property if it's not owned
+            Debug.Log($"{player.playerName} landed on {propertyName}");
             UIManager.Instance.ShowPurchaseOption(this, player);
-        }
-        else if (owner != player)
-        {
-            // Charge rent if another player lands on it
-            player.PayRent(owner, rentPrice);
         }
     }
 
     public void PurchaseProperty(PlayerProp player)
     {
-        if (owner == null) // Ensure property can only be purchased if it's not owned
+        if (owner == null && player.Money >= purchasePrice)
         {
-            if (player.Money >= purchasePrice)
-            {
-                player.Money -= purchasePrice; // Deduct money from player
-                owner = player; // Assign the player as the new owner
-                UIManager.Instance.ShowMessage(player.playerName + " purchased " + propertyName);
-            }
-            else
-            {
-                UIManager.Instance.ShowMessage(player.playerName + " does not have enough money to purchase " + propertyName);
-            }
+            player.Money -= purchasePrice;
+            owner = player;
+            Debug.Log($"{player.playerName} purchased {propertyName}");
+            UIManager.Instance.ShowMessage($"{player.playerName} purchased {propertyName}");
         }
         else
         {
-            UIManager.Instance.ShowMessage(propertyName + " is already owned by " + owner.playerName);
+            UIManager.Instance.ShowMessage($"Not enough money to purchase {propertyName}");
         }
     }
 }
