@@ -696,6 +696,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &530235923
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -791,6 +794,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &583669817
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1180,6 +1186,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &667991801
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1756,6 +1765,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1291765113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &946608374
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 946608376}
+  - component: {fileID: 946608375}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &946608375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946608374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141927c7bd407d547be17a33a23aa41c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  players: []
+  currentPlayerIndex: 0
+--- !u!4 &946608376
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 946608374}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.8899999, y: -8.24, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &957069658
 GameObject:
   m_ObjectHideFlags: 0
@@ -1851,6 +1906,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!1 &1004515491
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1989,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &1078774861
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2334,9 +2395,8 @@ MonoBehaviour:
   - {fileID: 134501256}
   - {fileID: 515103426}
   moveSpeed: 5
-  waitTime: 0.5
-  player1: {fileID: 1362682667}
-  player2: {fileID: 1725339952}
+  waitTime: 0.2
+  rollButton: {fileID: 658844251}
 --- !u!4 &1291765113
 Transform:
   m_ObjectHideFlags: 0
@@ -2495,7 +2555,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player1
+  playerID: 0
   Money: 1500
+  ownedProperties: []
 --- !u!61 &1362682671
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2818,6 +2880,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!1 &1564633490
 GameObject:
   m_ObjectHideFlags: 0
@@ -2963,7 +3028,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1852006224}
         m_TargetAssemblyTypeName: 
         m_MethodName: 
         m_Mode: 1
@@ -3147,7 +3212,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Player2
+  playerID: 0
   Money: 1500
+  ownedProperties: []
 --- !u!61 &1725339956
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -3768,6 +3835,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1291765113}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1847018197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1847018199}
+  - component: {fileID: 1847018198}
+  m_Layer: 0
+  m_Name: PropertySetManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1847018198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847018197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682f7f19a3945584d999a1e8c0f16cff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propertySets: []
+--- !u!4 &1847018199
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847018197}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 440.2, y: 246.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1852006224
 GameObject:
   m_ObjectHideFlags: 0
@@ -3798,6 +3910,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   purchaseUI: {fileID: 867615768}
+  buyButton: {fileID: 1585324691}
+  ignoreButton: {fileID: 930714360}
 --- !u!4 &1852006226
 Transform:
   m_ObjectHideFlags: 0
@@ -3893,6 +4007,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &1955222166
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4026,6 +4143,9 @@ MonoBehaviour:
   purchasePrice: 0
   rentPrice: 0
   owner: {fileID: 0}
+  ownershipIcon: {fileID: 0}
+  player1Icon: {fileID: 0}
+  player2Icon: {fileID: 0}
 --- !u!61 &2081494044
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -4209,3 +4329,5 @@ SceneRoots:
   - {fileID: 1793329346}
   - {fileID: 1748098948}
   - {fileID: 1852006226}
+  - {fileID: 1847018199}
+  - {fileID: 946608376}

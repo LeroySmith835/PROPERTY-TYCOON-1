@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI; // Import UI for Button
+using System.Collections.Generic;
+
 
 public class WaypointMover : MonoBehaviour
 {
@@ -7,14 +10,11 @@ public class WaypointMover : MonoBehaviour
     public float moveSpeed = 5f;
     public float waitTime = 0.5f;
 
-    public GameObject player1; // Reference to Player 1 GameObject
-    public GameObject player2; // Reference to Player 2 GameObject
-
-    private int player1WaypointIndex = 0; // Track Player 1's waypoint index
-    private int player2WaypointIndex = 0; // Track Player 2's waypoint index
-    private bool isMoving = false; // Flag for movement status
+    public Button rollButton; // Reference to Roll Button
     private DiceRoller diceRoller; // Reference to DiceRoller
-    private bool isPlayer1Turn = true; // Track turns
+    private bool isMoving = false; // Flag for movement status
+
+    private Dictionary<PlayerProp, int> playerWaypointIndices = new Dictionary<PlayerProp, int>(); // Tracks each player's position
 
     void Start()
     {
@@ -27,32 +27,39 @@ public class WaypointMover : MonoBehaviour
         {
             Debug.LogError("DiceRoller not found in the scene!");
         }
+
+        if (rollButton == null)
+        {
+            Debug.LogError("Roll Button is not assigned!");
+        }
+
+        // Initialize player waypoint indices
+        foreach (PlayerProp player in GameManager.Instance.players)
+        {
+            playerWaypointIndices[player] = 0; // Start at position 0
+        }
     }
 
     private void StartMoving(int diceSum)
     {
         if (!isMoving)
         {
-            // Start moving based on whose turn it is
-            if (isPlayer1Turn)
-            {
-                StartCoroutine(MoveToWaypoints(player1.transform, player1WaypointIndex, diceSum));
-            }
-            else
-            {
-                StartCoroutine(MoveToWaypoints(player2.transform, player2WaypointIndex, diceSum));
-            }
+            DisableRollButton(); // Disable roll button when movement starts
 
-            isPlayer1Turn = !isPlayer1Turn; // Switch turns after starting movement
+            PlayerProp currentPlayer = GameManager.Instance.GetCurrentPlayer();
+            if (currentPlayer != null && playerWaypointIndices.ContainsKey(currentPlayer))
+            {
+                StartCoroutine(MoveToWaypoints(currentPlayer, playerWaypointIndices[currentPlayer], diceSum));
+            }
         }
     }
 
-    IEnumerator MoveToWaypoints(Transform playerTransform, int waypointIndex, int steps)
+    IEnumerator MoveToWaypoints(PlayerProp player, int waypointIndex, int steps)
     {
         isMoving = true;
 
         // Disable the player's BoxCollider2D while moving
-        BoxCollider2D playerCollider = playerTransform.GetComponent<BoxCollider2D>();
+        BoxCollider2D playerCollider = player.GetComponent<BoxCollider2D>();
         if (playerCollider != null)
         {
             playerCollider.enabled = false;
@@ -68,9 +75,9 @@ public class WaypointMover : MonoBehaviour
             Transform targetWaypoint = waypoints[waypointIndex];
 
             // Move towards the target waypoint
-            while (Vector3.Distance(playerTransform.position, targetWaypoint.position) > 0.01f)
+            while (Vector3.Distance(player.transform.position, targetWaypoint.position) > 0.01f)
             {
-                playerTransform.position = Vector3.Lerp(playerTransform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
+                player.transform.position = Vector3.Lerp(player.transform.position, targetWaypoint.position, moveSpeed * Time.deltaTime);
                 yield return null;
             }
 
@@ -78,14 +85,7 @@ public class WaypointMover : MonoBehaviour
         }
 
         // Update the player's waypoint index after moving
-        if (playerTransform == player1.transform)
-        {
-            player1WaypointIndex = waypointIndex; // Update Player 1's index
-        }
-        else
-        {
-            player2WaypointIndex = waypointIndex; // Update Player 2's index
-        }
+        playerWaypointIndices[player] = waypointIndex;
 
         // Re-enable the player's BoxCollider2D after reaching the final waypoint
         if (playerCollider != null)
@@ -94,5 +94,24 @@ public class WaypointMover : MonoBehaviour
         }
 
         isMoving = false; // Allow next move
+
+        EnableRollButton(); // Enable roll button after movement
+        GameManager.Instance.NextTurn(); // Let GameManager handle turn switching
+    }
+
+    void DisableRollButton()
+    {
+        if (rollButton != null)
+        {
+            rollButton.interactable = false;
+        }
+    }
+
+    void EnableRollButton()
+    {
+        if (rollButton != null)
+        {
+            rollButton.interactable = true;
+        }
     }
 }
